@@ -68,7 +68,7 @@ class ConfigurationViewController: UIViewController, UITextFieldDelegate {
                         let certificateArn = defaults.string( forKey: "certificateArn")
                         let detachPolicyRequest = AWSIoTDetachPrincipalPolicyRequest()
                         detachPolicyRequest?.principal = certificateArn
-                        detachPolicyRequest?.policyName = PolicyName
+                        detachPolicyRequest?.policyName = Constants.PolicyName
 
                         iot.detachPrincipalPolicy(detachPolicyRequest!).continueWith(block: { (task) -> AnyObject? in
                             if let error = task.error {

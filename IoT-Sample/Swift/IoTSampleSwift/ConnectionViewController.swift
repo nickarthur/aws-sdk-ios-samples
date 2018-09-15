@@ -54,11 +54,11 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                         self.activityIndicatorView.stopAnimating()
                         self.connected = true
                         sender.isEnabled = true
-                        let uuid = UUID().uuidString;
+ // NAN DEBUG                       let uuid = UUID().uuidString; // generate our own clientId
                         let defaults = UserDefaults.standard
                         let certificateId = defaults.string( forKey: "certificateId")
 
-                        self.logTextView.text = "Using certificate:\n\(certificateId!)\n\n\nClient ID:\n\(uuid)"
+                        self.logTextView.text = "Using certificate:\n\(certificateId!)\n\n\nClient ID:\n\(Constants.uuid)"
 
                         tabBarViewController.viewControllers = [ self, self.publishViewController, self.subscribeViewController ]
 
@@ -114,7 +114,7 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                 // exist in the bundle.
                 let myBundle = Bundle.main
                 let myImages = myBundle.paths(forResourcesOfType: "p12" as String, inDirectory:nil)
-                let uuid = UUID().uuidString;
+// nan debug                let uuid = UUID().uuidString;
                 
                 if (myImages.count > 0) {
                     // At least one PKCS12 file exists in the bundle.  Attempt to load the first one
@@ -133,7 +133,7 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                             defaults.set("from-bundle", forKey:"certificateArn")
                             DispatchQueue.main.async {
                                 self.logTextView.text = "Using certificate: \(myImages[0]))"
-                                self.iotDataManager.connect( withClientId: uuid, cleanSession:true, certificateId:myImages[0], statusCallback: mqttEventCallback)
+                                self.iotDataManager.connect( withClientId: Constants.uuid, cleanSession:true, certificateId:myImages[0], statusCallback: mqttEventCallback)
                             }
                         }
                     }
@@ -146,7 +146,7 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                     }
 
                     // Now create and store the certificate ID in NSUserDefaults
-                    let csrDictionary = [ "commonName":CertificateSigningRequestCommonName, "countryName":CertificateSigningRequestCountryName, "organizationName":CertificateSigningRequestOrganizationName, "organizationalUnitName":CertificateSigningRequestOrganizationalUnitName ]
+                    let csrDictionary = [ "commonName":Constants.CertificateSigningRequestCommonName, "countryName":Constants.CertificateSigningRequestCountryName, "organizationName":Constants.CertificateSigningRequestOrganizationName, "organizationalUnitName":Constants.CertificateSigningRequestOrganizationalUnitName ]
 
                     self.iotManager.createKeysAndCertificate(fromCsr: csrDictionary, callback: {  (response ) -> Void in
                         if (response != nil)
@@ -157,7 +157,7 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                             print("response: [\(String(describing: response))]")
 
                             let attachPrincipalPolicyRequest = AWSIoTAttachPrincipalPolicyRequest()
-                            attachPrincipalPolicyRequest?.policyName = PolicyName
+                            attachPrincipalPolicyRequest?.policyName = Constants.PolicyName
                             attachPrincipalPolicyRequest?.principal = response?.certificateArn
                             
                             // Attach the policy to the certificate
@@ -172,7 +172,7 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                                 {
                                     DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
                                         self.logTextView.text = "Using certificate: \(certificateId!)"
-                                        self.iotDataManager.connect( withClientId: uuid, cleanSession:true, certificateId:certificateId!, statusCallback: mqttEventCallback)
+                                        self.iotDataManager.connect( withClientId: Constants.uuid, cleanSession:true, certificateId:certificateId!, statusCallback: mqttEventCallback)
 
                                     })
                                 }
@@ -192,10 +192,10 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
             }
             else
             {
-                let uuid = UUID().uuidString;
+// NAN DEBUG                let uuid = UUID().uuidString;
 
                 // Connect to the AWS IoT service
-                iotDataManager.connect( withClientId: uuid, cleanSession:true, certificateId:certificateId!, statusCallback: mqttEventCallback)
+                iotDataManager.connect( withClientId: Constants.uuid, cleanSession:true, certificateId:certificateId!, statusCallback: mqttEventCallback)
             }
         }
         else
@@ -214,7 +214,7 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
                 }
             }
         }
-    }
+    } // end connectButtonPressed
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,14 +229,14 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
 
         // Init IOT
         // Set up Cognito
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: AWSRegion, identityPoolId: CognitoIdentityPoolId)
-        let iotEndPoint = AWSEndpoint(urlString: IOT_ENDPOINT)
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: Constants.AWSRegion, identityPoolId: Constants.CognitoIdentityPoolId)
+        let iotEndPoint = AWSEndpoint(urlString: Constants.IOT_ENDPOINT)
         
         // Configuration for AWSIoT control plane APIs
-        let iotConfiguration = AWSServiceConfiguration(region: AWSRegion, credentialsProvider: credentialsProvider)
+        let iotConfiguration = AWSServiceConfiguration(region: Constants.AWSRegion, credentialsProvider: credentialsProvider)
         
         // Configuration for AWSIoT data plane APIs
-        let iotDataConfiguration = AWSServiceConfiguration(region: AWSRegion,
+        let iotDataConfiguration = AWSServiceConfiguration(region: Constants.AWSRegion,
                                                            endpoint: iotEndPoint,
                                                            credentialsProvider: credentialsProvider)
         AWSServiceManager.default().defaultServiceConfiguration = iotConfiguration
@@ -244,8 +244,8 @@ class ConnectionViewController: UIViewController, UITextViewDelegate {
         iotManager = AWSIoTManager.default()
         iot = AWSIoT.default()
 
-        AWSIoTDataManager.register(with: iotDataConfiguration!, forKey: ASWIoTDataManager)
-        iotDataManager = AWSIoTDataManager(forKey: ASWIoTDataManager)
+        AWSIoTDataManager.register(with: iotDataConfiguration!, forKey:    Constants.ASWIoTDataManager)
+        iotDataManager = AWSIoTDataManager(forKey: Constants.ASWIoTDataManager)
     }
 }
 

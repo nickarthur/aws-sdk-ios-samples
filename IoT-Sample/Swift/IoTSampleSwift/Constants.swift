@@ -16,17 +16,35 @@
 import Foundation
 import AWSCore
 
-//WARNING: To run this sample correctly, you must set the following constants.
+struct Constants {
+    // nan debug
+    static let uuid =
+        "NANIoTSampleApp-" + UUID().uuidString; // generate our own clientId
+    // nan debug
 
-let AWSRegion = AWSRegionType.Unknown // e.g. AWSRegionType.USEast1
-let CognitoIdentityPoolId = "YourCognitoIdentityPoolId"
-let CertificateSigningRequestCommonName = "IoTSampleSwift Application"
-let CertificateSigningRequestCountryName = "Your Country"
-let CertificateSigningRequestOrganizationName = "Your Organization"
-let CertificateSigningRequestOrganizationalUnitName = "Your Organizational Unit"
-let PolicyName = "YourPolicyName"
+    //WARNING: To run this sample correctly, you must set the following constants.
+    static let AWSRegion = AWSRegionType.USEast1 // e.g. AWSRegionType.USEast1
+    static let CognitoIdentityPoolId = "us-east-1:01ef5d41-4d42-42b7-ab54-8bc9823db4e3"
+    static let CertificateSigningRequestCommonName = "AWS IoT Certificate"
+    static let CertificateSigningRequestCountryName = "US"
+    static let CertificateSigningRequestOrganizationName = "Amazon.com Inc."
+    static let CertificateSigningRequestOrganizationalUnitName = "Amazon Web Services"
+    static let PolicyName = "NANIoTSampleAppIoTPolicy"
 
-// This is the endpoint in your AWS IoT console. eg: https://xxxxxxxxxx.iot.<region>.amazonaws.com
+    //let AWSRegion = AWSRegionType.Unknown // e.g. AWSRegionType.USEast1
+    //let CognitoIdentityPoolId = "YourCognitoIdentityPoolId"
+    //let CertificateSigningRequestCommonName = "IoTSampleSwift Application"
+    //let CertificateSigningRequestCountryName = "Your Country"
+    //let CertificateSigningRequestOrganizationName = "Your Organization"
+    //let CertificateSigningRequestOrganizationalUnitName = "Your Organizational Unit"
+    //let PolicyName = "YourPolicyName"
 
-let IOT_ENDPOINT = "https://xxxxxxxxxx.iot.<region>.amazonaws.com"
-let ASWIoTDataManager = "MyIotDataManager"
+    // This is the endpoint in your AWS IoT console. eg: https://xxxxxxxxxx.iot.<region>.amazonaws.com
+
+    static let IOT_ENDPOINT = "https://a2045eufe4r87o-ats.iot.us-east-1.amazonaws.com"
+    static let ASWIoTDataManager = "MyIotDataManager"
+
+    //let IOT_ENDPOINT = "https://xxxxxxxxxx.iot.<region>.amazonaws.com"
+    //let ASWIoTDataManager = "MyIotDataManager"
+    
+}

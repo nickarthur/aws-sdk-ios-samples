@@ -19,7 +19,7 @@ import AWSCore
 //
 //WARNING: To run this sample correctly, you must set the following constants.
 //
-let AwsRegion = AWSRegionType.Unknown // e.g. AWSRegionType.USEast1
-let CognitoIdentityPoolId = "YourCognitoIdentityPoolId"
+let AwsRegion = AWSRegionType.USEast1 // e.g. AWSRegionType.USEast1
+let CognitoIdentityPoolId = "us-east-1:e5292243-9619-4d0f-89dc-6b7cc63adc2d"
 //This is the endpoint in your AWS IoT console. eg: https://xxxxxxxxxx.iot.<region>.amazonaws.com
-let IOT_ENDPOINT = "https://xxxxxxxxxx.iot.<region>.amazonaws.com"
+let IOT_ENDPOINT = "https://a2045eufe4r87o.iot.us-east-1.amazonaws.com"

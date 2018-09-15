@@ -23,7 +23,7 @@ class PublishViewController: UIViewController {
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         print("Publish slider value: " + "\(sender.value)")
 
-        let iotDataManager = AWSIoTDataManager(forKey: ASWIoTDataManager)
+        let iotDataManager = AWSIoTDataManager(forKey: Constants.ASWIoTDataManager)
         let tabBarViewController = tabBarController as! IoTSampleTabBarController
 
         iotDataManager.publishString("\(sender.value)", onTopic:tabBarViewController.topic, qoS:.messageDeliveryAttemptedAtMostOnce)
